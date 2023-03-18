@@ -1,10 +1,8 @@
 
-// インクルード
+
 #include "./lib/all.h"
 using namespace std;
-// namespace fs = std::filesystem;
 
-// マクロ
 #define co(x) cout << (x) << "\n"
 #define cou(x) cout << (x)
 #define err(x) errorlog(lines, code_line, (x));
@@ -12,7 +10,7 @@ using namespace std;
 #define rep(i, n) for (ll i = 0; i < (n); i++)
 #define sn(i) now(setting, (i));
 
-// optionの変数
+
 bool op_funcskip = false;
 bool op_stylereset = true;
 bool op_end_anykey = false;
@@ -21,7 +19,7 @@ bool st_using_yes = false;
 bool st_style = true;
 bool us_shell = false;
 
-// 変数
+
 map<string, int> var_int;
 map<string, string> var_string;
 map<string, bool> var_bool;
@@ -44,7 +42,6 @@ ll if_count = 0;
 ll while_count = 0;
 bool isnx = false;
 
-// 事前宣言
 inline void errorlog(vector<string> line, int linenum, int errorcode);
 inline string nx();
 inline void aqua_setting();
@@ -134,7 +131,6 @@ inline string var_value(string name)
 	return "";
 }
 
-// エラー
 inline void errorlog(vector<string> line, int linenum, int errorcode)
 {
 	cout << "\n\nError: ";
@@ -288,8 +284,7 @@ inline void errorlog(vector<string> line, int linenum, int errorcode)
 	co("Line " + to_string(linenum + 1));
 	co("Error location\n");
 
-	// エラーの周りの行を表示するやつ
-	// なんて親切((
+	
 	if (sett[0])
 	{
 		if (linenum > 1)
@@ -315,7 +310,7 @@ inline void errorlog(vector<string> line, int linenum, int errorcode)
 
 inline void usinglog(int id)
 {
-	// usingのやつ
+	
 	string ans = "";
 	if (!st_using_yes)
 	{
@@ -356,7 +351,7 @@ inline void usinglog(int id)
 inline string f_math(int id, string s, string t)
 {
 
-	// いろんな関数が使ってるやつ
+	
 
 	ld a, b;
 
@@ -529,22 +524,22 @@ inline bool to_bool(string s)
 
 inline string aqua(string script, vector<string> line, int linenum)
 {
-	// スペースごとに変換
+	
 	vector<string> code = scriptcut(script);
 	string func = code[0];
 
 	ll argn = code.size() - 1;
 
-	// 実行時エラー(忌まわしきSEGMENTATION FAULT)防止
+	
 	for (int i = 0; i < 10; i++)
 	{
 		code.push_back("");
 	}
 
-	// インシデントチェック
+	
 	if (inc_code == inc_now)
 	{
-		// 以下、関数記述
+		
 		if (func == "out")
 		{
 			if (code[1][0] == '\"')
@@ -559,7 +554,7 @@ inline string aqua(string script, vector<string> line, int linenum)
 		else if (func == "option")
 		{
 
-			// 大欠陥じゃねえかこれ
+			
 			if (code[2] == "true" || code[2] == "false")
 			{
 
@@ -610,12 +605,12 @@ inline string aqua(string script, vector<string> line, int linenum)
 		}
 		else if (func == "#" || func == "comment")
 		{
-			// 何もない。何もしない。
+			
 		}
 		else if (func == "exit")
 		{
 
-			// exit. そのまま。
+			
 
 			if (code[1] == "")
 			{
@@ -629,7 +624,7 @@ inline string aqua(string script, vector<string> line, int linenum)
 		else if (func == "throw")
 		{
 
-			// 使う人おるの?
+			
 
 			if (code[1] == "")
 			{
@@ -643,7 +638,7 @@ inline string aqua(string script, vector<string> line, int linenum)
 		else if (func == "var")
 		{
 
-			// 新しい型追加するときめんどくさい(((
+			
 
 			if (isvarok(code[2]))
 			{
@@ -675,23 +670,22 @@ inline string aqua(string script, vector<string> line, int linenum)
 					}
 					else
 					{
-						err(6); // 存在しない型の時
+						err(6); 
 					}
 				}
 				else
 				{
-					err(9); // 変数が重複しているとき。optionで制御可能
+					err(9);
 				}
 			}
 			else
 			{
-				err(8); // やべえ名前の時
-			}
+				err(8); }
 		}
 		else if (func == "ln")
 		{
 
-			// 改行。エスケープシーケンス対応したから多分もう使わない。
+			
 
 			if (code[1] == "")
 			{
@@ -706,7 +700,7 @@ inline string aqua(string script, vector<string> line, int linenum)
 		else if (func == "style")
 		{
 
-			// \033のやつ。意味わからん
+			
 
 			if (sett[0])
 			{
@@ -821,7 +815,7 @@ inline string aqua(string script, vector<string> line, int linenum)
 		else if (func == "in")
 		{
 
-			// 入力。型追加するときに忘れんな
+			
 
 			switch (var_search(code[1]))
 			{
@@ -857,7 +851,7 @@ inline string aqua(string script, vector<string> line, int linenum)
 		else if (func == "set")
 		{
 
-			// 変数の中身を変更。上と同様
+			
 
 			switch (var_search(code[1]))
 			{
@@ -942,7 +936,7 @@ inline string aqua(string script, vector<string> line, int linenum)
 		else if (func == "flush")
 		{
 
-			// いるか?
+			
 
 			cout << flush;
 		}
@@ -1045,9 +1039,7 @@ inline string aqua(string script, vector<string> line, int linenum)
 		else if (func == "end")
 		{
 
-			// // インシデントチェック
-			// if (inc_now == 0 && inc_code == 0)
-			// 	err(19);
+			
 
 			if (code[1] == "forever")
 			{
@@ -1103,7 +1095,7 @@ inline string aqua(string script, vector<string> line, int linenum)
 			// if_count--;
 			// if (if_count < 0)
 			// {
-			// 	err(33); // 対応するifがない
+			// 	err(33); 
 			// }
 
 			// runcode = !runcode;
@@ -1250,38 +1242,37 @@ inline string aqua(string script, vector<string> line, int linenum)
 
 			if (!isint(code[1]))
 			{
-				// あ～ね。ラベル系ね。
-				if (label_list.count(code[1]))
+				
 				{
-					// あ～おｋ、そのラベルね
+					
 					code_line = label_list[code[1]];
 				}
 				else
 				{
-					// そんなラベルねえよ。先にあるんじゃないの?
+					
 					auto itr = find(all(lines), "label " + code[1]);
 
 					if (itr != lines.end())
 					{
-						// な～んだ。あるじゃねえか。
+						
 						code_line = distance(lines.begin(), itr);
 					}
 					else
 					{
-						// マジでねえじゃねえか! おい! エラーぶん投げるぞ!
+						
 						err(24);
 					}
 				}
 			}
 			else if (code[1] == ":")
 			{
-				// え? next?
+				
 				code_line = stoll(nx());
 				code_line -= 2;
 			}
 			else
 			{
-				// 数値直接指定????まじ????
+				
 				if (stoll(code[1]) < 1)
 					err(17);
 				code_line = stoll(code[1]);
@@ -1378,7 +1369,7 @@ inline string aqua(string script, vector<string> line, int linenum)
 		else if (func == "label")
 		{
 
-			// 形式検査
+			
 			if (code[1] == "")
 				err(2);
 			if (code[1] == ":")
@@ -1397,19 +1388,18 @@ inline string aqua(string script, vector<string> line, int linenum)
 		}
 		else if (func == "sum")
 		{
-			// 合計
-
-			// 返り値
+			
+		
 			ld ans = 0;
 
-			// 全探索。多分大丈夫
+			
 			rep(i, argn)
 			{
 
-				// 仮(tmp)
+				
 				string s = code[i + 1];
 
-				if (isvarok(s)) // 変数の場合
+				if (isvarok(s)) 
 				{
 					try
 					{
@@ -1417,11 +1407,10 @@ inline string aqua(string script, vector<string> line, int linenum)
 					}
 					catch (const exception &e)
 					{
-						err(20); // stringとかの場合
+						err(20);
 					}
 				}
-				else if (isstring(s)) // あからさまにstring("")の場合
-				{
+				else if (isstring(s))
 					err(20);
 				}
 				else if (s == ":")
@@ -1432,24 +1421,24 @@ inline string aqua(string script, vector<string> line, int linenum)
 					}
 					catch (const exception &e)
 					{
-						err(20); // 一応
+						err(20); 
 					}
 				}
 				else
 				{
-					// 多分数値だけど一応try
+					
 					try
 					{
 						ans += stold(s);
 					}
 					catch (const exception &e)
 					{
-						err(20); // 察し((
+						err(20); 
 					}
 				}
 			}
 
-			// 全部終わり! じゃあね!
+			
 			return to_string(ans);
 		}
 		else if (func == "gcd")
@@ -1472,16 +1461,16 @@ inline string aqua(string script, vector<string> line, int linenum)
 		}
 		else if (func == "rand")
 		{
-			// code[1]~code[2]までの乱数
+			
 			return f_math(16, code[1], code[2]);
 		}
 		else if (func == "set_rand")
 		{
-			srand(time(NULL)); // 魔法の言葉
+			srand(time(NULL)); 
 		}
 		else if (func == "ord")
 		{
-			// Pythonのordと一緒
+			
 
 			string s = "";
 
@@ -1613,7 +1602,7 @@ inline string aqua(string script, vector<string> line, int linenum)
 		}
 		else if (func == "len")
 		{
-			// やっぱりPython((
+			
 
 			string s = "";
 
@@ -1661,7 +1650,7 @@ inline string aqua(string script, vector<string> line, int linenum)
 			runcode = to_bool(code[1]);
 			while_count++;
 
-			if (runcode) // ifのやつを流用
+			if (runcode) 
 			{
 				inc_now++;
 				inc_code++;
@@ -1683,7 +1672,7 @@ inline string aqua(string script, vector<string> line, int linenum)
 			}
 		}
 	}
-	else // インシデントが違うとき
+	else 
 	{
 		if (func == "end")
 		{
@@ -1691,7 +1680,7 @@ inline string aqua(string script, vector<string> line, int linenum)
 			if (code[1] == "if")
 			{
 
-				// インシデントチェック
+				
 				if (if_count <= 0)
 					err(31);
 
@@ -1728,7 +1717,7 @@ inline string aqua(string script, vector<string> line, int linenum)
 			// if_count--;
 			// if (if_count < 0)
 			// {
-			// 	err(33); // 対応するifがない
+			// 	err(33); 
 			// }
 
 			// runcode = !runcode;
@@ -1797,7 +1786,7 @@ inline string aqua(string script, vector<string> line, int linenum)
 		}
 	}
 
-	// 未定義を返す
+	
 	return "undefined";
 }
 
@@ -1822,7 +1811,7 @@ inline void cscle()
 int main(int argc, char const *argv[])
 {
 
-	// Aqua基本処理系
+	
 
 #pragma region Aqua System Variables
 
@@ -1838,10 +1827,10 @@ int main(int argc, char const *argv[])
 
 #pragma endregion
 
-	// 引数をvector<string>に変換
+	
 	vector<string> args(argv, argv + argc);
 
-	// 何もオプションがない場合
+	
 
 	if (argc == 1)
 	{
@@ -1883,12 +1872,12 @@ int main(int argc, char const *argv[])
 		return 0;
 	}
 
-	// UNIXだったらfalse
+	
 #if defined(__unix) || defined(__unix__)
 	iswin = false;
 #endif
 
-	// コマンド引数適用
+	
 	if (count(all(args), "--no-style"))
 	{
 		sett = {0};
@@ -1904,7 +1893,7 @@ int main(int argc, char const *argv[])
 	else
 		st_using_yes = false;
 
-	// ファイル存在チェック
+	
 	FILE *fp = fopen(args[1].c_str(), "r");
 	if (fp == NULL)
 	{
@@ -1916,7 +1905,7 @@ int main(int argc, char const *argv[])
 	}
 	fclose(fp);
 
-	// ファイル読み込み
+	
 	ifstream file;
 	file.open(args[1]);
 
@@ -1931,17 +1920,17 @@ int main(int argc, char const *argv[])
 #endif
 	}
 
-	// インシデント対応
+	
 	lines = incident(lines);
 
-	// Aqua実行
+
 	for (code_line = 0; code_line < lines.size(); code_line++)
 	{
 		// cout << inc_now << " " << inc_code << endl;
 		linenume = code_line;
 		aqua(lines[code_line], lines, code_line);
 
-		if (isnx) // :使ったら繰り越し
+		if (isnx)
 		{
 			code_line++;
 			isnx = false;
@@ -1959,7 +1948,7 @@ int main(int argc, char const *argv[])
 		aqua_get = getchar();
 	}
 
-	// 終了
+	
 
 	return 0;
 }
